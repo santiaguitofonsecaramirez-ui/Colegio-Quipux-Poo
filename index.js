@@ -1,11 +1,11 @@
 class Persona {
+
     #nombre;
     #edad;
     #id;
     #nacionalidad;
 
     constructor(nombre, edad, id, nacionalidad) {
-
         this.#nombre = nombre;
         this.#edad = edad;
         this.#id = id;
@@ -38,12 +38,13 @@ class Persona {
 }
 
 
+
 class Estudiante extends Persona {
 
     #grado;
 
-    constructor(nombre, edad, id, nacionalidad, grado) {
 
+    constructor(nombre, edad, id, nacionalidad, grado) {
         super(nombre, edad, id, nacionalidad);
 
         this.#grado = grado;
@@ -54,7 +55,6 @@ class Estudiante extends Persona {
     }
 
     mostrarInfo() {
-
         super.mostrarInfo();
 
         console.log("Grado:", this.getGrado());
@@ -62,12 +62,12 @@ class Estudiante extends Persona {
 }
 
 
+
 class Profesor extends Persona {
 
     #especialidad;
 
     constructor(nombre, edad, id, nacionalidad, especialidad) {
-
         super(nombre, edad, id, nacionalidad);
 
         this.#especialidad = especialidad;
@@ -78,12 +78,12 @@ class Profesor extends Persona {
     }
 
     mostrarInfo() {
-
         super.mostrarInfo();
 
         console.log("Especialidad:", this.getEspecialidad());
     }
 }
+
 
 
 class Materia {
@@ -92,13 +92,14 @@ class Materia {
     #profesor;
     #tareas;
 
-    constructor(nombre, profesor) {
 
+    constructor(nombre, profesor) {
         this.#nombre = nombre;
         this.#profesor = profesor;
         this.#tareas = [];
     }
 
+ 
     getNombre() {
         return this.#nombre;
     }
@@ -107,30 +108,40 @@ class Materia {
         return this.#profesor;
     }
 
-    agregarTarea(tarea) {
 
+    agregarTarea(tarea) {
         this.#tareas.push(tarea);
     }
 
+  
     mostrarInfo() {
-
         console.log("Información de la materia");
         console.log("Nombre:", this.getNombre());
         console.log("Profesor:", this.getProfesor().getNombre());
     }
+
+
+    mostrarTareas() {
+        console.log("Tareas de la materia:");
+
+        for (let i = 0; i < this.#tareas.length; i++) {
+        this.#tareas[i].mostrarInfo();
 }
+    }
+}
+
+
 
 class Tarea {
 
     #nombre;
     #descripcion;
-    #fecha_entrega;
+    #fechaEntrega;
 
-    constructor(nombre, descripcion, fecha_entrega) {
-
+    constructor(nombre, descripcion, fechaEntrega) {
         this.#nombre = nombre;
         this.#descripcion = descripcion;
-        this.#fecha_entrega = fecha_entrega;
+        this.#fechaEntrega = fechaEntrega;
     }
 
     getNombre() {
@@ -141,63 +152,68 @@ class Tarea {
         return this.#descripcion;
     }
 
-    getFecha_entrega() {
-        return this.#fecha_entrega;
+    getFechaEntrega() {
+        return this.#fechaEntrega;
     }
 
     mostrarInfo() {
-
         console.log("Información de la tarea");
         console.log("Nombre:", this.getNombre());
         console.log("Descripción:", this.getDescripcion());
-        console.log("Fecha de entrega:", this.getFecha_entrega());
+        console.log("Fecha de entrega:", this.getFechaEntrega());
     }
 }
 
 
-const profesor1 = new Profesor("iveth", 30, "12345678", "colombiana", "sistemas");
-const profesor2 = new Profesor("Luz emilia", 68, "98765432", "colombiana", "Física");
+const profesor1 = new Profesor("Iveth", 30 , "12345678", "Colombiana","Sistemas");
 
-const estudiante1 = new Estudiante("Nicolas montoya", 16, "1020304589", "colombiano", "undecimo");
-const estudiante2 = new Estudiante("Santiago fonseca", 16, "11223344", "colombiana", "undecimo");
-
-const materia1 = new Materia("sistemas", profesor1);
-const materia2 = new Materia("Física", profesor2);
-
-
-const tarea1 = new Tarea("Tarea 1", "hacer una pagina web", "2026-08-13");
-
-const tarea2 = new Tarea("Tarea 2", "Preparar presentación sobre maquinas simples", "2026-08-20");
+const profesor2 = new Profesor("Luz Emilia", 68 , "98765432", "Colombiana", "Física");
 
 
 
+const estudiante1 = new Estudiante("Nicolás Montoya", 16 ,"1020304589", "Colombiano", "Undécimo");
+
+const estudiante2 = new Estudiante( "Santiago Fonseca",16, "11223344", "Colombiano", "Undécimo");
+
+const materia1 = new Materia( "Sistemas", profesor1 );
+
+const materia2 = new Materia( "Física", profesor2);
 
 
 
+const tarea1 = new Tarea( "Tarea 1", "Hacer una página web", "2026-08-13");
 
-estudiante1.mostrarInfo();
-estudiante2.mostrarInfo();
+const tarea2 = new Tarea( "Tarea 2", "Preparar presentación sobre máquinas simples", "2026-08-20");
 
-profesor1.mostrarInfo();
-profesor2.mostrarInfo();
 
 
 
 materia1.agregarTarea(tarea1);
-materia1.agregarTarea(tarea2);
-
-
-materia2.agregarTarea(tarea1);
 materia2.agregarTarea(tarea2);
 
 
+
+estudiante1.mostrarInfo();
+
+console.log("------------------------------");
+
+estudiante2.mostrarInfo();
+
+console.log("------------------------------");
+
+profesor1.mostrarInfo();
+
+console.log("------------------------------");
+
+profesor2.mostrarInfo();
+
+
+console.log("------------------------------");
+
 materia1.mostrarInfo();
+materia1.mostrarTareas();
+
+console.log("------------------------------");
+
 materia2.mostrarInfo();
-
-tarea1.mostrarInfo();
-
-tarea2.mostrarInfo();   
-
-
-
-
+materia2.mostrarTareas();
