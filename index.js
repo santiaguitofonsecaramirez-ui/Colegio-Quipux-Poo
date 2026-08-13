@@ -198,6 +198,28 @@ tarea1.mostrarInfo();
 
 tarea2.mostrarInfo();   
 
-
-
-
+let salir = false;
+ 
+while (!salir) {
+    console.log("\n=== SISTEMA ESCOLAR ===");
+    console.log("1. Ver estudiantes");
+    console.log("2. Ver profesores");
+    console.log("3. Ver materias y tareas");
+    console.log("4. Salir");
+ 
+    const opcion = readlineSync.question("Elige una opción: ");
+    console.log("------------------------------");
+ 
+    if (opcion === "1") {
+        estudiantes.forEach(e => e.mostrarInfo());
+    } else if (opcion === "2") {
+        profesores.forEach(p => p.mostrarInfo());
+    } else if (opcion === "3") {
+        materias.forEach(m => { m.mostrarInfo(); m.mostrarTareas(); });
+    } else if (opcion === "4") {
+        console.log("Hasta luego.");
+        salir = true;
+    } else {
+        console.log("Opción no válida.");
+    }
+}
