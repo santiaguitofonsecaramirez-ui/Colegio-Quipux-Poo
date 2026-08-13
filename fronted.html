@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema Escolar</title>
+<style>
+  :root{
+    --tinta: #1c2b3a;
+    --papel: #f6f2e9;
+    --papel-linea: #dcd4c2;
+    --mostaza: #c98a2b;
+    --mostaza-osc: #9c691a;
+    --verde-tiza: #46705a;
+    --rojo-tiza: #a1432f;
+    --gris: #6f6a5e;
+  }
+
+  *{ box-sizing:border-box; }
+
+  body{
+    margin:0;
+    background:var(--papel);
+    background-image:
+      repeating-linear-gradient(var(--papel) 0px, var(--papel) 27px, var(--papel-linea) 28px);
+    color:var(--tinta);
+    font-family: "Georgia", "Iowan Old Style", serif;
+    padding-bottom: 80px;
+  }
+
+  .utility{
+    font-family: "Courier New", monospace;
+    letter-spacing: 0.04em;
+  }
+
+  header{
+    padding: 48px 24px 24px;
+    max-width: 980px;
+    margin: 0 auto;
+    border-bottom: 3px solid var(--tinta);
+  }
+
+  header .eyebrow{
+    font-family: "Courier New", monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 12px;
+    color: var(--mostaza-osc);
+    margin: 0 0 8px;
+  }
+
+  header h1{
+    font-size: clamp(32px, 5vw, 52px);
+    margin: 0 0 6px;
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  header p{
+    margin: 0;
+    color: var(--gris);
+    font-size: 15px;
+    max-width: 60ch;
+  }
+
+  nav{
+    max-width: 980px;
+    margin: 0 auto;
+    display: flex;
+    gap: 4px;
+    padding: 0 24px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+  }
+
+  nav button{
+    font-family: "Courier New", monospace;
+    background: none;
+    border: 1px solid var(--tinta);
+    border-bottom: none;
+    padding: 10px 18px;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    color: var(--tinta);
+    position: relative;
+    top: 1px;
+  }
+
+  nav button.activo{
+    background: var(--tinta);
+    color: var(--papel);
+  }
+
+  main{
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 28px 24px 0;
+    border-top: 1px solid var(--tinta);
+  }
+
+  section{ display:none; }
+  section.activo{ display:block; }
+
+  .grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  .carne{
+    background: var(--papel);
+    border: 1.5px solid var(--tinta);
+    padding: 18px 18px 16px;
+    position: relative;
+    box-shadow: 4px 4px 0 var(--tinta);
+  }
+
+  .carne .tag{
+    font-family: "Courier New", monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--papel);
+    background: var(--verde-tiza);
+    padding: 3px 8px;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+
+  .carne.profesor .tag{ background: var(--rojo-tiza); }
+  .carne.materia .tag{ background: var(--mostaza-osc); }
+
+  .carne h3{
+    margin: 0 0 10px;
+    font-size: 20px;
+    font-style: italic;
+    font-weight: 400;
+    border-bottom: 1px dashed var(--papel-linea);
+    padding-bottom: 8px;
+  }
+
+  .campo{
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 13.5px;
+    padding: 3px 0;
+  }
+
+  .campo .k{
+    font-family: "Courier New", monospace;
+    color: var(--gris);
+    text-transform: uppercase;
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    padding-top: 2px;
+    white-space: nowrap;
+  }
+
+  .campo .v{ text-align: right; }
+
+  .tareas-lista{
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--papel-linea);
+  }
+
+  .tareas-lista .k{
+    font-family: "Courier New", monospace;
+    color: var(--gris);
+    text-transform: uppercase;
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+
+  .tarea-item{
+    font-size: 13px;
+    padding: 5px 0 5px 14px;
+    position: relative;
+    border-bottom: 1px solid var(--papel-linea);
+  }
+  .tarea-item:last-child{ border-bottom: none; }
+  .tarea-item::before{
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--mostaza-osc);
+  }
+  .tarea-item .fecha{
+    display:block;
+    font-family: "Courier New", monospace;
+    font-size: 10.5px;
+    color: var(--gris);
+    margin-top: 2px;
+  }
+
+  footer{
+    max-width: 980px;
+    margin: 40px auto 0;
+    padding: 16px 24px;
+    font-family: "Courier New", monospace;
+    font-size: 11px;
+    color: var(--gris);
+    border-top: 1px solid var(--papel-linea);
+  }
+
+  footer code{ color: var(--mostaza-osc); }
+</style>
+</head>
+<body>
+
+<header>
+  <p class="eyebrow">registro académico — año 2026</p>
+  <h1>Sistema Escolar</h1>
+  <p>La misma información que ves en la consola (<code class="utility">sistema-escolar-cli.js</code>), aquí en una interfaz visual.</p>
+</header>
+
+<nav id="nav">
+  <button data-vista="estudiantes" class="activo">1. Estudiantes</button>
+  <button data-vista="profesores">2. Profesores</button>
+  <button data-vista="materias">3. Materias y tareas</button>
+</nav>
+
+<main>
+  <section id="vista-estudiantes" class="activo">
+    <div class="grid" id="grid-estudiantes"></div>
+  </section>
+
+  <section id="vista-profesores">
+    <div class="grid" id="grid-profesores"></div>
+  </section>
+
+  <section id="vista-materias">
+    <div class="grid" id="grid-materias"></div>
+  </section>
+</main>
+
+<footer>
+  mismas clases que el backend: <code>Persona → Estudiante / Profesor · Materia · Tarea</code>
+</footer>
+
+<script>
+//Se agrega getTareas() en Materia
+
+class Persona {
+  #nombre; #edad; #id; #nacionalidad;
+  constructor(nombre, edad, id, nacionalidad) {
+    this.#nombre = nombre;
+    this.#edad = edad;
+    this.#id = id;
+    this.#nacionalidad = nacionalidad;
+  }
+  getNombre() { return this.#nombre; }
+  getEdad() { return this.#edad; }
+  getId() { return this.#id; }
+  getNacionalidad() { return this.#nacionalidad; }
+}
+
+class Estudiante extends Persona {
+  #grado;
+  constructor(nombre, edad, id, nacionalidad, grado) {
+    super(nombre, edad, id, nacionalidad);
+    this.#grado = grado;
+  }
+  getGrado() { return this.#grado; }
+}
+
+class Profesor extends Persona {
+  #especialidad;
+  constructor(nombre, edad, id, nacionalidad, especialidad) {
+    super(nombre, edad, id, nacionalidad);
+    this.#especialidad = especialidad;
+  }
+  getEspecialidad() { return this.#especialidad; }
+}
+
+class Tarea {
+  #nombre; #descripcion; #fechaEntrega;
+  constructor(nombre, descripcion, fechaEntrega) {
+    this.#nombre = nombre;
+    this.#descripcion = descripcion;
+    this.#fechaEntrega = fechaEntrega;
+  }
+  getNombre() { return this.#nombre; }
+  getDescripcion() { return this.#descripcion; }
+  getFechaEntrega() { return this.#fechaEntrega; }
+}
+
+class Materia {
+  #nombre; #profesor; #tareas;
+  constructor(nombre, profesor) {
+    this.#nombre = nombre;
+    this.#profesor = profesor;
+    this.#tareas = [];
+  }
+  getNombre() { return this.#nombre; }
+  getProfesor() { return this.#profesor; }
+  agregarTarea(tarea) { this.#tareas.push(tarea); }
+  getTareas() { return this.#tareas; } // añadido solo para renderizar en el frontend
+}
+
+
+const profesor1 = new Profesor("Iveth", 30, "12345678", "Colombiana", "Sistemas");
+const profesor2 = new Profesor("Luz Emilia", 68, "98765432", "Colombiana", "Física");
+
+const estudiante1 = new Estudiante("Nicolás Montoya", 16, "1020304589", "Colombiano", "Undécimo");
+const estudiante2 = new Estudiante("Santiago Fonseca", 16, "11223344", "Colombiano", "Undécimo");
+
+const materia1 = new Materia("Sistemas", profesor1);
+const materia2 = new Materia("Física", profesor2);
+
+const tarea1 = new Tarea("Tarea 1", "Hacer una página web", "2026-08-13");
+const tarea2 = new Tarea("Tarea 1", "Preparar presentación sobre máquinas simples", "2026-08-20");
+
+materia1.agregarTarea(tarea1);
+materia2.agregarTarea(tarea2);
+
+const estudiantes = [estudiante1, estudiante2];
+const profesores = [profesor1, profesor2];
+const materias = [materia1, materia2];
+
+//Render
+
+function formatearFecha(iso){
+  const [y,m,d] = iso.split("-");
+  const meses = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+  return `${d} ${meses[parseInt(m,10)-1]} ${y}`;
+}
+
+function renderEstudiantes(){
+  document.getElementById("grid-estudiantes").innerHTML = estudiantes.map(e => `
+    <div class="carne">
+      <span class="tag">Estudiante</span>
+      <h3>${e.getNombre()}</h3>
+      <div class="campo"><span class="k">Edad</span><span class="v">${e.getEdad()} años</span></div>
+      <div class="campo"><span class="k">Grado</span><span class="v">${e.getGrado()}</span></div>
+      <div class="campo"><span class="k">Nacionalidad</span><span class="v">${e.getNacionalidad()}</span></div>
+      <div class="campo"><span class="k">ID</span><span class="v utility">${e.getId()}</span></div>
+    </div>
+  `).join("");
+}
+
+function renderProfesores(){
+  document.getElementById("grid-profesores").innerHTML = profesores.map(p => `
+    <div class="carne profesor">
+      <span class="tag">Profesor</span>
+      <h3>${p.getNombre()}</h3>
+      <div class="campo"><span class="k">Edad</span><span class="v">${p.getEdad()} años</span></div>
+      <div class="campo"><span class="k">Especialidad</span><span class="v">${p.getEspecialidad()}</span></div>
+      <div class="campo"><span class="k">Nacionalidad</span><span class="v">${p.getNacionalidad()}</span></div>
+      <div class="campo"><span class="k">ID</span><span class="v utility">${p.getId()}</span></div>
+    </div>
+  `).join("");
+}
+
+function renderMaterias(){
+  document.getElementById("grid-materias").innerHTML = materias.map(m => {
+    const tareas = m.getTareas();
+    const listaTareas = tareas.map(t => `
+      <div class="tarea-item">
+        ${t.getNombre()} — ${t.getDescripcion()}
+        <span class="fecha">entrega: ${formatearFecha(t.getFechaEntrega())}</span>
+      </div>
+    `).join("");
+
+    return `
+      <div class="carne materia">
+        <span class="tag">Materia</span>
+        <h3>${m.getNombre()}</h3>
+        <div class="campo"><span class="k">Profesor</span><span class="v">${m.getProfesor().getNombre()}</span></div>
+        <div class="tareas-lista">
+          <div class="k">Tareas (${tareas.length})</div>
+          ${listaTareas}
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+renderEstudiantes();
+renderProfesores();
+renderMaterias();
+
+//Navegación
+
+document.getElementById("nav").addEventListener("click", (ev) => {
+  const btn = ev.target.closest("button[data-vista]");
+  if (!btn) return;
+
+  document.querySelectorAll("nav button").forEach(b => b.classList.remove("activo"));
+  btn.classList.add("activo");
+
+  document.querySelectorAll("main section").forEach(s => s.classList.remove("activo"));
+  document.getElementById(`vista-${btn.dataset.vista}`).classList.add("activo");
+});
+</script>
+
+</body>
+</html>
