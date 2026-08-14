@@ -65,7 +65,6 @@ class Estudiante extends Persona {
 }
 
 
-
 class Profesor extends Persona {
 
     #especialidad;
@@ -102,7 +101,7 @@ class Materia {
         this.#tareas = [];
     }
 
- 
+
     getNombre() {
         return this.#nombre;
     }
@@ -116,7 +115,7 @@ class Materia {
         this.#tareas.push(tarea);
     }
 
-  
+
     mostrarInfo() {
         console.log("Información de la materia");
         console.log("Nombre:", this.getNombre());
@@ -128,8 +127,8 @@ class Materia {
         console.log("Tareas de la materia:");
 
         for (let i = 0; i < this.#tareas.length; i++) {
-        this.#tareas[i].mostrarInfo();
-}
+            this.#tareas[i].mostrarInfo();
+        }
     }
 }
 
@@ -168,25 +167,25 @@ class Tarea {
 }
 
 //Creacion de Instancias(Objetos) 2 por cada clase
-const profesor1 = new Profesor("Iveth", 30 , "12345678", "Colombiana","Sistemas");
+const profesor1 = new Profesor("Iveth", 30, "12345678", "Colombiana", "Sistemas");
 
-const profesor2 = new Profesor("Luz Emilia", 68 , "98765432", "Colombiana", "Física");
-
-
-
-const estudiante1 = new Estudiante("Nicolás Montoya", 16 ,"1020304589", "Colombiano", "Undécimo");
-
-const estudiante2 = new Estudiante( "Santiago Fonseca",16, "11223344", "Colombiano", "Undécimo");
-
-const materia1 = new Materia( "Sistemas", profesor1 );
-
-const materia2 = new Materia( "Física", profesor2);
+const profesor2 = new Profesor("Luz Emilia", 68, "98765432", "Colombiana", "Física");
 
 
 
-const tarea1 = new Tarea( "Tarea 1", "Hacer una página web", "2026-08-13");
+const estudiante1 = new Estudiante("Nicolás Montoya", 16, "1020304589", "Colombiano", "Undécimo");
 
-const tarea2 = new Tarea( "Tarea 2", "Preparar presentación sobre máquinas simples", "2026-08-20");
+const estudiante2 = new Estudiante("Santiago Fonseca", 16, "11223344", "Colombiano", "Undécimo");
+
+const materia1 = new Materia("Sistemas", profesor1);
+
+const materia2 = new Materia("Física", profesor2);
+
+
+
+const tarea1 = new Tarea("Tarea 1", "Hacer una página web", "2026-08-13");
+
+const tarea2 = new Tarea("Tarea 2", "Preparar presentación sobre máquinas simples", "2026-08-20");
 
 
 //Información esencial de las Clases
@@ -222,31 +221,66 @@ materia2.mostrarInfo();
 
 tarea1.mostrarInfo();
 
-tarea2.mostrarInfo();   
+tarea2.mostrarInfo();
 
 //Interacción con Consola
+
+const estudiantes = [
+    estudiante1,
+    estudiante2
+];
+
+const profesores = [
+    profesor1,
+    profesor2
+];
+
+const materias = [
+    materia1,
+    materia2
+];
+
 let salir = false;
- 
+
 while (!salir) {
-    console.log("\n SISTEMA ESCOLAR ");
+
+    console.log("\n---SISTEMA ESCOLAR ---");
     console.log("1. Ver estudiantes");
     console.log("2. Ver profesores");
     console.log("3. Ver materias y tareas");
     console.log("4. Salir");
- 
-    const opcion = readlineSync.question("Elige una opción: ");
+
+    const opcion = readlineSync.question("Elige una opcion: ");
+
     console.log("------------------------------");
- 
+
     if (opcion === "1") {
-        estudiantes.forEach(e => e.mostrarInfo());
+
+        for (let i = 0; i < estudiantes.length; i++) {
+            estudiantes[i].mostrarInfo();
+            console.log("------------------------------");
+        }
+
     } else if (opcion === "2") {
-        profesores.forEach(p => p.mostrarInfo());
+
+        for (let i = 0; i < profesores.length; i++) {
+            profesores[i].mostrarInfo();
+            console.log("------------------------------");
+        }
+
     } else if (opcion === "3") {
-        materias.forEach(m => { m.mostrarInfo(); m.mostrarTareas(); });
+
+        for (let i = 0; i < materias.length; i++) {
+            materias[i].mostrarInfo();
+            materias[i].mostrarTareas();
+            console.log("------------------------------");
+        }
+
     } else if (opcion === "4") {
         console.log("Hasta luego.");
         salir = true;
+
     } else {
-        console.log("Opción no válida.");
+        console.log("Opcion no valida.");
     }
 }
